@@ -1,0 +1,113 @@
+============================================
+
+ README for publications.data
+
+ (C) 2014 Frank Hofmann, Berlin, Germany
+ Released under GNU Public License (GPL)
+ email frank.hofmann@efho.de
+
+============================================
+
+An example database for the first steps using PostgreSQL
+
+The file publications.data consists of the example database publications
+with two tables named authors, and publications. This example shows how
+to create a table, insert data, select data, removes data, and howto
+join two tables.
+
+* howto install PostgreSQL on Debian 7 Wheezy
+
+  Install PostgreSQL and phpPgAdmin on Debian 7 ‘Wheezy’
+  http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
+
+
+* Create the database
+
+$ createdb publications
+
+
+* import the prepared database content from the file publications.data
+
+$ psql -d publications -f publications.data publications
+
+  Options:
+  -d: database to connect to
+  -f: read data from the referenced file name
+
+
+* display the existing tables
+
+  \dt 
+
+publications=# \dt
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | authors      | Tabelle | frank
+ public | publications | Tabelle | frank
+(2 Zeilen)
+
+
+* display the table publications, only
+
+  \dt publications
+
+publications=# \dt publications 
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | publications | Tabelle | frank
+(1 Zeile)
+
+
+* display the contents of the authors table
+
+publications=# SELECT * FROM authors; 
+id |    name     
+----+-------------
+  1 | Ken Follet
+  2 | Ian Rankin
+  3 | Stephen Fry
+(3 Zeilen)
+
+
+* display the contents of the publications table by publications title
+  in descending order
+
+publications=# SELECT * FROM publications ORDER BY booktitle DESC;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  4 |        1 | Jackdaws
+  3 |        2 | Black And Blue
+(4 Zeilen)
+
+
+* delete the writer with id = 3 from authors table
+
+publications=# DELETE FROM authors WHERE id = 3;
+DELETE 1
+
+
+* insert a new writer into authors
+
+publications=# INSERT INTO authors VALUES (3, 'Stephen Fry');
+INSERT 0 1
+
+
+* join two tables to list author name, and the according book title in
+  ascending order
+
+SELECT authors.name, booktitle FROM publications JOIN authors ON
+(publications.authorId = authors.id) ORDER BY authors.name,booktitle
+ASC;
+    name    |     booktitle     
+------------+-------------------
+ Ian Rankin | Black And Blue
+ Ian Rankin | Set In Darkness
+ Ken Follet | Jackdaws
+ Ken Follet | World Without End
+(4 Zeilen)
+
+
