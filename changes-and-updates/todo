@@ -1,0 +1,8 @@
+DELETE
+TRUNCATE
+UPDATE
+DROP TABLE
+DROP DATABASE
+ALTER TABLE
+* change table layout
+* change table owner
