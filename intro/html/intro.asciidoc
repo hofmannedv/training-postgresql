@@ -20,7 +20,7 @@ The file `publications.data` consists of the example database
 example shows how to create a table, insert data, select data, removes
 data, and how to join two tables.
 
-== Howto install PostgreSQL on Debian 7 Wheezy ==
+== How to install PostgreSQL on Debian 7 Wheezy ==
 
 This excellent tutorial explains how to do that:
 
