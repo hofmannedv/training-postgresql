@@ -1,0 +1,148 @@
+Learning PostgreSQL
+===================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 1.0
+:Author Initials: FH
+:edition: 1
+:lang: en
+:date: October 17, 2014
+:numbered:
+
+= Preface =
+
+An example database for the first steps using PostgreSQL.
+
+The file `publications.data` consists of the example database
+`publications` with two tables named `authors`, and `publications`. This
+example shows how to create a table, insert data, select data, removes
+data, and how to join two tables.
+
+== Howto install PostgreSQL on Debian 7 Wheezy ==
+
+This excellent tutorial explains how to do that:
+
+* Install PostgreSQL and phpPgAdmin on Debian 7 ‘Wheezy’:
+  http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
+
+== Preparing the working environment ==
+
+=== Create the database ===
+
+Use the command `createdb` to prepare the database we need:
+
+----
+$ createdb publications
+----
+
+=== Use the example database content delivered here ===
+
+Import the prepared database content from the file `publications.data`.
+
+----
+$ psql -d publications -f publications.data publications
+----
+
+The `psql` options result in:
+
+`-d`:: database named `publications` to connect to
+`-f`:: read data from the referenced file name `publications.data`
+
+== Display the existing tables ==
+
+Use the command '\dt' for that. Without further parameter the command
+lists all the tables that are available.
+
+----
+publications=# \dt
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | authors      | Tabelle | frank
+ public | publications | Tabelle | frank
+(2 Zeilen)
+----
+
+To display the table `publications`, only, extend the command '\dt' by
+the according name of the table:
+
+----
+publications=# \dt publications 
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | publications | Tabelle | frank
+(1 Zeile)
+----
+
+== Selecting data ==
+
+To display the contents of the authors table use the `SELECT` command as
+follows:
+
+----
+publications=# SELECT * FROM authors; 
+ id |    name
+----+-------------
+  1 | Ken Follet
+  2 | Ian Rankin
+  3 | Stephen Fry
+(3 Zeilen)
+----
+
+To display the contents of the publications table and sort by
+publications title in descending order, the `ORDER BY` statement comes
+into play. The statement `DESC` sorts in descending order, and `ASC` in
+ascending order, respectively. `ASC` is the default sort order.
+
+----
+publications=# SELECT * FROM publications ORDER BY booktitle DESC;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  4 |        1 | Jackdaws
+  3 |        2 | Black And Blue
+(4 Zeilen)
+----
+
+== Deleting lines ==
+
+To delete the writer with `id = 3` from the table `authors`, use the
+`DELETE` command.
+
+----
+publications=# DELETE FROM authors WHERE id = 3;
+DELETE 1
+----
+
+== Insert data ==
+
+To insert a new writer into table `authors`, use the `INSERT` command.
+
+----
+publications=# INSERT INTO authors VALUES (3, 'Stephen Fry');
+INSERT 0 1
+----
+
+== Combining tables ==
+
+To join two tables to list both the author name, and the according book
+title in ascending order, the `JOIN` command will help. To identify the
+columns in the correct way, add the table name, too.
+
+----
+SELECT authors.name, booktitle FROM publications JOIN authors ON
+(publications.authorId = authors.id) ORDER BY authors.name,booktitle
+ASC;
+    name    |     booktitle
+------------+-------------------
+ Ian Rankin | Black And Blue
+ Ian Rankin | Set In Darkness
+ Ken Follet | Jackdaws
+ Ken Follet | World Without End
+(4 Zeilen)
+----
+
