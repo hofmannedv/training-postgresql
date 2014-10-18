@@ -136,6 +136,12 @@ Usually, the output contains all the rows that might be a bit too much
 in some situations. Now, the `DISTINCT` statement comes into play. The
 database server suppresses the output of duplicate entries. 
 
+----
+SELECT 
+DISTINCT colunmlist
+FROM table;
+----
+
 The example below shows the list of authors with unique values.
 
 ----
@@ -145,4 +151,15 @@ publications=# SELECT DISTINCT authorid FROM publications;
         1
         2
 (2 Zeilen)
+----
+
+=== Use conditions and the `WHERE` statement ===
+
+The `WHERE` statement allows you to set conditions, and to filter the
+rows that match these conditions, only. The definition is like that:
+
+----
+SELECT colunmlist
+FROM table
+WHERE condition;
 ----
