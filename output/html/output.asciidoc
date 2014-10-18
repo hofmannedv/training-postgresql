@@ -22,11 +22,30 @@ example shows how to select data, and specify the data output.
 == Selecting data ==
 
 To display the contents of the authors table use the `SELECT` command as
-shown below. The `*` operator selects all the columns from the named
-table. The sort order is not predictable, because there are no rules
-about the sort order. Usually, the entries are shown as the DBMS fetches
-them from the database table, and as they had been added to the table
-before.
+shown below. The simple usage is as follows:
+
+----
+SELECT column [,column] FROM table
+----
+
+As a column you may either specify a list of column names from the named
+table, or the `*` operator. 
+
+----
+publications=# SELECT booktitle FROM publications;
+     booktitle
+- -----------------
+ World Without End
+ Set In Darkness
+ Black And Blue
+ Jackdaws
+(4 Zeilen)
+----
+
+The `*` operator selects all the columns from the named table. At the
+end the output includes the statement how many lines have been fetched
+from the table. As you can see above these are four lines, and three
+lines in the output below.
 
 ----
 publications=# SELECT * FROM authors; 
@@ -37,6 +56,10 @@ publications=# SELECT * FROM authors;
   3 | Stephen Fry
 (3 Zeilen)
 ----
+
+The sort order is not predictable, because there are no rules about the
+sort order. Usually, the entries are shown as the DBMS fetches them from
+the database table, and as they had been added to the table before.
 
 == Sorting the output ==
 
@@ -106,4 +129,4 @@ publications=# SELECT * FROM publications ORDER BY booktitle DESC;
 (4 Zeilen)
 ----
 
-
+=== Suppress duplicates using `DISTINCT` ===
