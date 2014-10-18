@@ -859,8 +859,26 @@ descending order, respectively.</p></div>
 (4 Zeilen)</tt></pre>
 </div></div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_filtering_the_output">3. Filtering the output</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_suppress_duplicates_using_tt_distinct_tt">2.4. Suppress duplicates using <tt>DISTINCT</tt></h3>
+<h3 id="_suppress_duplicates_using_tt_distinct_tt">3.1. Suppress duplicates using <tt>DISTINCT</tt></h3>
+<div class="paragraph"><p>Usually, the output contains all the rows that might be a bit too much
+in some situations. Now, the <tt>DISTINCT</tt> statement comes into play. The
+database server suppresses the output of duplicate entries.</p></div>
+<div class="paragraph"><p>The example below shows the list of authors with unique values.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT DISTINCT authorid FROM publications;
+ authorid
+- --------
+        1
+        2
+(2 Zeilen)</tt></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -869,7 +887,7 @@ descending order, respectively.</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-18 17:36:38 CEST
+Last updated 2014-10-18 17:49:58 CEST
 </div>
 </div>
 </body>

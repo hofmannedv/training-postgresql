@@ -129,4 +129,20 @@ publications=# SELECT * FROM publications ORDER BY booktitle DESC;
 (4 Zeilen)
 ----
 
+== Filtering the output ==
 === Suppress duplicates using `DISTINCT` ===
+
+Usually, the output contains all the rows that might be a bit too much
+in some situations. Now, the `DISTINCT` statement comes into play. The
+database server suppresses the output of duplicate entries. 
+
+The example below shows the list of authors with unique values.
+
+----
+publications=# SELECT DISTINCT authorid FROM publications;
+ authorid 
+- --------
+        1
+        2
+(2 Zeilen)
+----
