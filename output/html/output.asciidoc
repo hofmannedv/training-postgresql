@@ -25,7 +25,7 @@ To display the contents of the authors table use the `SELECT` command as
 shown below. The simple usage is as follows:
 
 ----
-SELECT column [,column] FROM table
+SELECT column [,column] FROM table;
 ----
 
 As a column you may either specify a list of column names from the named
@@ -71,7 +71,7 @@ to sort the output by one or more columns. It is defined as follows:
 ----
 SELECT colunmlist
 FROM table
-ORDER BY column name [,column name] [ASC|DESC]
+ORDER BY column name [,column name] [ASC|DESC];
 ----
 
 To display the contents of the publications table and sort by

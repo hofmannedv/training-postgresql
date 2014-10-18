@@ -759,7 +759,7 @@ example shows how to select data, and specify the data output.</p></div>
 shown below. The simple usage is as follows:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><tt>SELECT column [,column] FROM table</tt></pre>
+<pre><tt>SELECT column [,column] FROM table;</tt></pre>
 </div></div>
 <div class="paragraph"><p>As a column you may either specify a list of column names from the named
 table, or the <tt>*</tt> operator.</p></div>
@@ -804,7 +804,7 @@ to sort the output by one or more columns. It is defined as follows:</p></div>
 <div class="content">
 <pre><tt>SELECT colunmlist
 FROM table
-ORDER BY column name [,column name] [ASC|DESC]</tt></pre>
+ORDER BY column name [,column name] [ASC|DESC];</tt></pre>
 </div></div>
 <div class="paragraph"><p>To display the contents of the publications table and sort by
 publications title, the <tt>ORDER BY</tt> statement comes into play followed
@@ -869,6 +869,12 @@ descending order, respectively.</p></div>
 <div class="paragraph"><p>Usually, the output contains all the rows that might be a bit too much
 in some situations. Now, the <tt>DISTINCT</tt> statement comes into play. The
 database server suppresses the output of duplicate entries.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>SELECT
+DISTINCT colunmlist
+FROM table;</tt></pre>
+</div></div>
 <div class="paragraph"><p>The example below shows the list of authors with unique values.</p></div>
 <div class="listingblock">
 <div class="content">
@@ -898,7 +904,7 @@ WHERE condition;</tt></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-18 18:27:21 CEST
+Last updated 2014-10-18 18:31:14 CEST
 </div>
 </div>
 </body>
