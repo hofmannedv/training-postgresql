@@ -756,8 +756,11 @@ example shows how to select data, and specify the data output.</p></div>
 <h2 id="_selecting_data">1. Selecting data</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>To display the contents of the authors table use the <tt>SELECT</tt> command as
-shown below. The * operator selects all the columns from the named
-table.</p></div>
+shown below. The <tt>*</tt> operator selects all the columns from the named
+table. The sort order is not predictable, because there are no rules
+about the sort order. Usually, the entries are shown as the DBMS fetches
+them from the database table, and as they had been added to the table
+before.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><tt>publications=# SELECT * FROM authors;
@@ -768,10 +771,62 @@ table.</p></div>
   3 | Stephen Fry
 (3 Zeilen)</tt></pre>
 </div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sorting_the_output">2. Sorting the output</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_by_a_certain_column">2.1. By a certain column</h3>
+<div class="paragraph"><p>PostgreSQL supports so-called SQL clauses. One of these is <tt>ORDER BY</tt>
+to sort the output by one or more columns. It is defined as follows:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>SELECT colunmlist
+FROM table
+ORDER BY column name [,column name] [ASC|DESC]</tt></pre>
+</div></div>
 <div class="paragraph"><p>To display the contents of the publications table and sort by
-publications title in descending order, the <tt>ORDER BY</tt> statement comes
-into play. The statement <tt>DESC</tt> sorts in descending order, and <tt>ASC</tt> in
-ascending order, respectively. <tt>ASC</tt> is the default sort order.</p></div>
+publications title, the <tt>ORDER BY</tt> statement comes into play followed
+the name of the column <tt>booktitle</tt>.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications ORDER BY booktitle;
+ id | authorid |     booktitle
+----+----------+-------------------
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+  2 |        2 | Set In Darkness
+  1 |        1 | World Without End
+(4 Zeilen)</tt></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_by_more_than_one_column">2.2. By more than one column</h3>
+<div class="paragraph"><p>The <tt>ORDER BY</tt> clause allows you to specify more than one column.
+PostgreSQL sorts the items accordingly from left to right.</p></div>
+<div class="paragraph"><p>The example below displays sorting by author (column <tt>authorid</tt>),
+firstly, and by book title (column <tt>booktitle</tt>), secondly.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications ORDER BY authorid,booktitle;
+ id | authorid |     booktitle
+----+----------+-------------------
+  4 |        1 | Jackdaws
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  2 |        2 | Set In Darkness
+(4 Zeilen)</tt></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_ascending_and_descending_sort_order">2.3. Ascending and descending sort order</h3>
+<div class="paragraph"><p>As already stated above the output sort order is not guaranteed.
+PostgreSQL offers two further clauses to specify this&#8201;&#8212;&#8201;<tt>ASC</tt>, and
+<tt>DESC</tt>. The statement <tt>ASC</tt> sorts in ascending order, and <tt>DESC</tt> in
+descending order, respectively.</p></div>
+<div class="paragraph"><p>The example below shows the output from table <tt>publications</tt> sorted by
+<tt>booktitle</tt> in descending order.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><tt>publications=# SELECT * FROM publications ORDER BY booktitle DESC;
@@ -786,11 +841,12 @@ ascending order, respectively. <tt>ASC</tt> is the default sort order.</p></div>
 </div>
 </div>
 </div>
+</div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-18 16:46:25 CEST
+Last updated 2014-10-18 17:21:18 CEST
 </div>
 </div>
 </body>

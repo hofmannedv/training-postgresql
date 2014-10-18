@@ -22,8 +22,11 @@ example shows how to select data, and specify the data output.
 == Selecting data ==
 
 To display the contents of the authors table use the `SELECT` command as
-shown below. The * operator selects all the columns from the named
-table.
+shown below. The `*` operator selects all the columns from the named
+table. The sort order is not predictable, because there are no rules
+about the sort order. Usually, the entries are shown as the DBMS fetches
+them from the database table, and as they had been added to the table
+before.
 
 ----
 publications=# SELECT * FROM authors; 
@@ -35,10 +38,62 @@ publications=# SELECT * FROM authors;
 (3 Zeilen)
 ----
 
+== Sorting the output ==
+
+=== By a certain column ===
+
+PostgreSQL supports so-called SQL clauses. One of these is `ORDER BY`
+to sort the output by one or more columns. It is defined as follows:
+
+----
+SELECT colunmlist
+FROM table
+ORDER BY column name [,column name] [ASC|DESC]
+----
+
 To display the contents of the publications table and sort by
-publications title in descending order, the `ORDER BY` statement comes
-into play. The statement `DESC` sorts in descending order, and `ASC` in
-ascending order, respectively. `ASC` is the default sort order.
+publications title, the `ORDER BY` statement comes into play followed
+the name of the column `booktitle`.
+
+----
+publications=# SELECT * FROM publications ORDER BY booktitle;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+  2 |        2 | Set In Darkness
+  1 |        1 | World Without End
+(4 Zeilen)
+----
+
+=== By more than one column ===
+
+The `ORDER BY` clause allows you to specify more than one column.
+PostgreSQL sorts the items accordingly from left to right.
+
+The example below displays sorting by author (column `authorid`),
+firstly, and by book title (column `booktitle`), secondly.
+
+----
+publications=# SELECT * FROM publications ORDER BY authorid,booktitle;
+ id | authorid |     booktitle
+----+----------+-------------------
+  4 |        1 | Jackdaws
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  2 |        2 | Set In Darkness
+(4 Zeilen)
+----
+
+=== Ascending and descending sort order ===
+
+As already stated above the output sort order is not guaranteed.
+PostgreSQL offers two further clauses to specify this -- `ASC`, and
+`DESC`. The statement `ASC` sorts in ascending order, and `DESC` in
+descending order, respectively.
+
+The example below shows the output from table `publications` sorted by
+`booktitle` in descending order.
 
 ----
 publications=# SELECT * FROM publications ORDER BY booktitle DESC;
