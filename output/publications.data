@@ -1,0 +1,92 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: authors; Type: TABLE; Schema: public; Owner: frank; Tablespace: 
+--
+
+CREATE TABLE authors (
+    id integer,
+    name character varying(30)
+);
+
+
+ALTER TABLE public.authors OWNER TO frank;
+
+--
+-- Name: publications; Type: TABLE; Schema: public; Owner: frank; Tablespace: 
+--
+
+CREATE TABLE publications (
+    id integer,
+    authorid integer,
+    booktitle character varying(50)
+);
+
+
+ALTER TABLE public.publications OWNER TO frank;
+
+--
+-- Data for Name: authors; Type: TABLE DATA; Schema: public; Owner: frank
+--
+
+COPY authors (id, name) FROM stdin;
+1	Ken Follet
+2	Ian Rankin
+3	Stephen Fry
+\.
+
+
+--
+-- Data for Name: publications; Type: TABLE DATA; Schema: public; Owner: frank
+--
+
+COPY publications (id, authorid, booktitle) FROM stdin;
+1	1	World Without End
+2	2	Set In Darkness
+3	2	Black And Blue
+4	1	Jackdaws
+\.
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
