@@ -965,6 +965,18 @@ the <tt>IN</tt> operator as follows:</p></div>
   4 |        1 | Jackdaws
 (3 Zeilen)</tt></pre>
 </div></div>
+<div class="paragraph"><p>PostgreSQL also knows the keyword <tt>BETWEEN</tt> to specify a range of
+values.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications WHERE id BETWEEN 2 AND 4;
+ id | authorid |    booktitle
+----+----------+-----------------
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)</tt></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -973,7 +985,7 @@ the <tt>IN</tt> operator as follows:</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-20 22:02:09 CEST
+Last updated 2014-10-20 22:05:52 CEST
 </div>
 </div>
 </body>
