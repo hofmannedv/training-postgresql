@@ -190,6 +190,19 @@ publications=# SELECT * FROM publications WHERE authorId = 1;
 (2 Zeilen)
 ----
 
+It is also possible to combine conditions using the `OR` operator. The
+next example shows the output that contains all entries which have
+either id as 1, or 4.
+
+----
+publications=# SELECT * FROM publications WHERE id = 1 OR id = 4;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  4 |        1 | Jackdaws
+(2 Zeilen)
+----
+
 To display the entries in which the id is either 1, 3, or 4, you may use
 the `IN` operator as follows:
 
