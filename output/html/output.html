@@ -872,7 +872,7 @@ database server suppresses the output of duplicate entries.</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><tt>SELECT
-DISTINCT colunmlist
+DISTINCT columnlist
 FROM table;</tt></pre>
 </div></div>
 <div class="paragraph"><p>The example below shows the list of authors with unique values.</p></div>
@@ -896,6 +896,17 @@ rows that match these conditions, only. The definition is like that:</p></div>
 FROM table
 WHERE condition;</tt></pre>
 </div></div>
+<div class="paragraph"><p>To display the entries in which the authorId is 1 (= all books by Ken
+Follett as he owns authorId 1) use this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications WHERE authorId = 1;
+ id | authorid |     booktitle
+----+----------+-------------------
+  1 |        1 | World Without End
+  4 |        1 | Jackdaws
+(2 Zeilen)</tt></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -904,7 +915,7 @@ WHERE condition;</tt></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-18 18:31:14 CEST
+Last updated 2014-10-20 21:44:21 CEST
 </div>
 </div>
 </body>

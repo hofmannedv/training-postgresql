@@ -138,7 +138,7 @@ database server suppresses the output of duplicate entries.
 
 ----
 SELECT 
-DISTINCT colunmlist
+DISTINCT columnlist
 FROM table;
 ----
 
@@ -162,4 +162,16 @@ rows that match these conditions, only. The definition is like that:
 SELECT colunmlist
 FROM table
 WHERE condition;
+----
+
+To display the entries in which the authorId is 1 (= all books by Ken
+Follett as he owns authorId 1) use this:
+
+----
+publications=# SELECT * FROM publications WHERE authorId = 1;
+ id | authorid |     booktitle
+----+----------+-------------------
+  1 |        1 | World Without End
+  4 |        1 | Jackdaws
+(2 Zeilen)
 ----
