@@ -896,6 +896,52 @@ rows that match these conditions, only. The definition is like that:</p></div>
 FROM table
 WHERE condition;</tt></pre>
 </div></div>
+<div class="paragraph"><p>As a condition the following operators are allowed to be used:</p></div>
+<div class="tableblock" id="tab.operators">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Operator  </th>
+<th align="left" valign="top"> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>&lt;</tt></p></td>
+<td align="left" valign="top"><p class="table">less than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>&lt;=</tt></p></td>
+<td align="left" valign="top"><p class="table">less or equal than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>=</tt></p></td>
+<td align="left" valign="top"><p class="table">equal</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>&gt;=</tt></p></td>
+<td align="left" valign="top"><p class="table">greater or equal than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>&gt;</tt></p></td>
+<td align="left" valign="top"><p class="table">greater than</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>&lt;&gt;</tt> and <tt>!=</tt></p></td>
+<td align="left" valign="top"><p class="table">not</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>IN</tt></p></td>
+<td align="left" valign="top"><p class="table">member in a set</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="paragraph"><p>To display the entries in which the authorId is 1 (= all books by Ken
 Follett as he owns authorId 1) use this:</p></div>
 <div class="listingblock">
@@ -907,6 +953,18 @@ Follett as he owns authorId 1) use this:</p></div>
   4 |        1 | Jackdaws
 (2 Zeilen)</tt></pre>
 </div></div>
+<div class="paragraph"><p>To display the entries in which the id is either 1, 3, or 4, you may use
+the <tt>IN</tt> operator as follows:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications WHERE id IN (1, 3, 4);
+ id | authorid |     booktitle
+----+----------+-------------------
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)</tt></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -915,7 +973,7 @@ Follett as he owns authorId 1) use this:</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-20 21:44:21 CEST
+Last updated 2014-10-20 22:02:09 CEST
 </div>
 </div>
 </body>

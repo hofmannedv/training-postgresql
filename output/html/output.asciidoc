@@ -164,6 +164,20 @@ FROM table
 WHERE condition;
 ----
 
+As a condition the following operators are allowed to be used:
+
+[frame="topbot",options="header",id="tab.operators"]
+|====
+| Operator  | Description
+| `<`  | less than
+| `<=` | less or equal than 
+| `=`  | equal
+| `>=` | greater or equal than
+| `>`  | greater than
+| `<>` and `!=` | not
+| `IN` | member in a set
+|====
+
 To display the entries in which the authorId is 1 (= all books by Ken
 Follett as he owns authorId 1) use this:
 
@@ -174,4 +188,17 @@ publications=# SELECT * FROM publications WHERE authorId = 1;
   1 |        1 | World Without End
   4 |        1 | Jackdaws
 (2 Zeilen)
+----
+
+To display the entries in which the id is either 1, 3, or 4, you may use
+the `IN` operator as follows:
+
+----
+publications=# SELECT * FROM publications WHERE id IN (1, 3, 4);
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)
 ----
