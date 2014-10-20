@@ -754,17 +754,30 @@ asciidoc.install(4);
 example shows how to create a table, insert data, select data, removes
 data, and how to join two tables.</p></div>
 <div class="sect1">
-<h2 id="_howto_install_postgresql_on_debian_7_wheezy">1. Howto install PostgreSQL on Debian 7 Wheezy</h2>
+<h2 id="_how_to_install">1. How to install</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_postgresql_on_debian_7_em_wheezy_em">1.1. PostgreSQL on Debian 7 <em>Wheezy</em></h3>
 <div class="paragraph"><p>This excellent tutorial explains how to do that:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-Install PostgreSQL and phpPgAdmin on Debian 7 ‘Wheezy’:
-  <a href="http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/">http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/</a>
+Install PostgreSQL and phpPgAdmin on Debian 7 <em>Wheezy</em> <a href="#PostgreSQL-Debian">[PostgreSQL-Debian]</a>
 </p>
 </li>
 </ul></div>
+</div>
+<div class="sect2">
+<h3 id="_postgresql_on_os_x">1.2. PostgreSQL on OS X</h3>
+<div class="paragraph"><p>There is the postgresql.app which simplifies getting started:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+PostgreSQL.app: <a href="http://postgresapp.com/">http://postgresapp.com/</a>
+</p>
+</li>
+</ul></div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -772,11 +785,12 @@ Install PostgreSQL and phpPgAdmin on Debian 7 ‘Wheezy’:
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_create_the_database">2.1. Create the database</h3>
-<div class="paragraph"><p>Use the command <tt>createdb</tt> to prepare the database we need:</p></div>
+<div class="paragraph"><p>As the database administrator use the command <tt>createdb</tt> to prepare the database we need:</p></div>
 <div class="listingblock">
 <div class="content">
-<pre><tt>$ createdb publications</tt></pre>
+<pre><tt>$ createdb -O username publications</tt></pre>
 </div></div>
+<div class="paragraph"><p>As the username choose your UNIX user name so that the database belongs to you.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_use_the_example_database_content_delivered_here">2.2. Use the example database content delivered here</h3>
@@ -911,12 +925,34 @@ ASC;
 </div></div>
 </div>
 </div>
+<h1 id="_acknowledgements">Acknowledgements</h1>
+<div class="paragraph"><p>The author sincerely thanks Wolfram Eifler, Stefan Schumacher, Andreas
+Scherbaum, and Jan-Erik Tesdal for their tips advice on this document.</p></div>
+<h1 id="_further_information">Further information</h1>
+<div class="ulist"><ul>
+<li>
+<p>
+Official PostgreSQL documentation, <a href="http://www.postgresql.org/docs/">http://www.postgresql.org/docs/</a>
+</p>
+</li>
+<li>
+<p>
+<a id="PostgreSQL-Debian"></a>[PostgreSQL-Debian] Install PostgreSQL and phpPgAdmin on Debian 7 <em>Wheezy</em>, <a href="http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/">http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/</a>
+</p>
+</li>
+<li>
+<p>
+<a id="Scherbaum"></a>[Scherbaum] Andreas Scherbaum: PostgreSQL - Datenbankpraxis für Anwender,
+  Administratoren und Entwickler, Open Source Press, <a href="http://postgresql-buch.de/">http://postgresql-buch.de/</a>
+</p>
+</li>
+</ul></div>
 </div>
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-17 14:01:35 CEST
+Last updated 2014-10-20 21:25:19 CEST
 </div>
 </div>
 </body>

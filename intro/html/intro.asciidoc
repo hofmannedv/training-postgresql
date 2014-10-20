@@ -20,22 +20,31 @@ The file `publications.data` consists of the example database
 example shows how to create a table, insert data, select data, removes
 data, and how to join two tables.
 
-== How to install PostgreSQL on Debian 7 Wheezy ==
+== How to install == 
+
+=== PostgreSQL on Debian 7 'Wheezy' ===
 
 This excellent tutorial explains how to do that:
 
-* Install PostgreSQL and phpPgAdmin on Debian 7 ‘Wheezy’:
-  http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
+* Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy' <<PostgreSQL-Debian>>
+
+=== PostgreSQL on OS X ===
+
+There is the postgresql.app which simplifies getting started:
+
+* PostgreSQL.app: http://postgresapp.com/
 
 == Preparing the working environment ==
 
 === Create the database ===
 
-Use the command `createdb` to prepare the database we need:
+As the database administrator use the command `createdb` to prepare the database we need:
 
 ----
-$ createdb publications
+$ createdb -O username publications
 ----
+
+As the username choose your UNIX user name so that the database belongs to you.
 
 === Use the example database content delivered here ===
 
@@ -146,3 +155,16 @@ ASC;
 (4 Zeilen)
 ----
 
+= Acknowledgements =
+
+The author sincerely thanks Wolfram Eifler, Stefan Schumacher, Andreas
+Scherbaum, and Jan-Erik Tesdal for their tips advice on this document.
+
+= Further information =
+
+- Official PostgreSQL documentation, http://www.postgresql.org/docs/
+
+- [[[PostgreSQL-Debian]]] Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy', http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
+
+- [[[Scherbaum]]] Andreas Scherbaum: PostgreSQL - Datenbankpraxis für Anwender,
+  Administratoren und Entwickler, Open Source Press, http://postgresql-buch.de/
