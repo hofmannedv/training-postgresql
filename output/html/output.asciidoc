@@ -271,3 +271,14 @@ publications=# SELECT * FROM publications LIMIT 3 OFFSET 1;
   4 |        1 | Jackdaws
 (3 Zeilen)
 ----
+
+=== Search patterns using `LIKE` ===
+
+You can define search patterns using the `LIKE` operator, and meta
+characters. This helps to find matches in a table.
+
+Using the `LIKE` operator you can search for patterns at the beginning
+as well as at the end of strings, and for fragments, too. This helps you
+to find substrings no matter where they appear in your string. In case
+of a match the `LIKE` operator returns `TRUE`, and `FALSE` otherwise.
+Combining the two operators `NOT` and `LIKE` reverses the result.
