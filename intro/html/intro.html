@@ -853,11 +853,34 @@ command <em>\dt</em> by the according name of the table:</p></div>
 <div class="sect1">
 <h2 id="_the_basic_structure_of_an_sql_command">4. The basic structure of an SQL command</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>ToDo</p></div>
+<div class="paragraph"><p>Using a commandline prompt, PostgreSQL waits for your instructions. An
+instruction is named &#8220;query&#8221; no matter which kind of action it
+triggers. In general, an SQL query has the following format:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>statement;</tt></pre>
+</div></div>
+<div class="paragraph"><p>A statement can be something like <tt>SELECT field FROM table;</tt> whereas
+field refers to a certain column, and table to the according name of the
+table to retrieve data from (see the <a href="#select">[select]</a> statement for more details).</p></div>
+<div class="paragraph"><p>It is more important to notice the semicolon at the end of the SQL
+query. This character indicates the end of the query, and PostgreSQL
+executes your query. As an alternative the characters <tt>\g</tt> are possible
+that can be translated as <tt>go</tt>.</p></div>
+<div class="paragraph"><p>Having executed your query PostgreSQL reports how many rows are affected
+by your query. The result is output below the result:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT CURRENT_TIME;
+       timetz
+- ------------------
+ 11:26:08.913477+02
+(1 Zeile)</tt></pre>
+</div></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_selecting_data">5. Selecting data</h2>
+<h2 id="select">5. Selecting data</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>To display the contents of the authors table use the <tt>SELECT</tt> command as
 follows:</p></div>
@@ -965,7 +988,7 @@ ISBN 978-3-937514-55-0, <a href="http://postgresql-buch.de/">http://postgresql-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-21 10:58:30 CEST
+Last updated 2014-10-21 11:27:37 CEST
 </div>
 </div>
 </body>

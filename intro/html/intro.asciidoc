@@ -89,8 +89,35 @@ publications=# \dt publications
 
 == The basic structure of an SQL command ==
 
-ToDo
+Using a commandline prompt, PostgreSQL waits for your instructions. An
+instruction is named ``query'' no matter which kind of action it
+triggers. In general, an SQL query has the following format:
 
+----
+statement;
+----
+
+A statement can be something like `SELECT field FROM table;` whereas
+field refers to a certain column, and table to the according name of the
+table to retrieve data from (see the <<select>> statement for more details). 
+
+It is more important to notice the semicolon at the end of the SQL
+query. This character indicates the end of the query, and PostgreSQL
+executes your query. As an alternative the characters `\g` are possible
+that can be translated as `go`.
+
+Having executed your query PostgreSQL reports how many rows are affected
+by your query. The result is output below the result:
+
+----
+publications=# SELECT CURRENT_TIME;
+       timetz       
+- ------------------
+ 11:26:08.913477+02
+(1 Zeile)
+----
+
+[[select]]
 == Selecting data ==
 
 To display the contents of the authors table use the `SELECT` command as
