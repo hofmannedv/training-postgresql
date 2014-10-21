@@ -231,3 +231,43 @@ publications=# SELECT * FROM publications WHERE id BETWEEN 2 AND 4;
   4 |        1 | Jackdaws
 (3 Zeilen)
 ----
+
+=== Limit the output ===
+
+In certain situations you may like to limit the lines of output, for
+example on a website displaying the search result. At this point the
+`LIMIT` keyword comes into play. The definition is like that:
+
+----
+SELECT colunmlist
+FROM table
+LIMIT number
+OFFSET index;
+----
+
+The value of `number` sets the maximum number of output lines. The next
+example displays the first three entries, only:
+
+----
+publications=# SELECT * FROM publications LIMIT 3;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+(3 Zeilen)
+----
+
+To start at a certain output entry the start position can be specified
+using the `OFFSET` value. Keep in mind that PostgreSQL starts to count
+at offset 0. To start from the second entry you can write this query:
+
+----
+publications=# SELECT * FROM publications LIMIT 3 OFFSET 1;
+ id | authorid |    booktitle    
+----+----------+-----------------
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)
+----
