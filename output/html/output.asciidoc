@@ -272,7 +272,7 @@ publications=# SELECT * FROM publications LIMIT 3 OFFSET 1;
 (3 Zeilen)
 ----
 
-=== Search patterns using `LIKE` ===
+=== Search patterns using `LIKE` and `ILIKE` ===
 
 You can define search patterns using the `LIKE` operator, and meta
 characters. This helps to find matches in a table.
@@ -307,4 +307,20 @@ publications=# SELECT * FROM publications WHERE booktitle LIKE '%ack%';
   3 |        2 | Black And Blue
   4 |        1 | Jackdaws
 (2 Zeilen)
+----
+
+To find an exact pattern use the `LIKE` operator. To find patterns no
+matter which spelling the `ILIKE` operator can be helpful. `ILIKE` is a
+PostgreSQL extension, and does not belong to the SQL standard set.
+
+In the following example all entries are fetched from the table that
+start with the substring `BL` followed by any other characters, no
+matter whether these characters are lowercase or uppercase.
+
+----
+publications=# SELECT * FROM publications WHERE booktitle ILIKE 'BL%';
+ id | authorid |   booktitle    
+----+----------+----------------
+  3 |        2 | Black And Blue
+(1 Zeile)
 ----

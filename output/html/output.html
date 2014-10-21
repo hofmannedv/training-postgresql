@@ -1035,7 +1035,7 @@ at offset 0. To start from the second entry you can write this query:</p></div>
 </div></div>
 </div>
 <div class="sect2">
-<h3 id="_search_patterns_using_tt_like_tt">3.4. Search patterns using <tt>LIKE</tt></h3>
+<h3 id="_search_patterns_using_tt_like_tt_and_tt_ilike_tt">3.4. Search patterns using <tt>LIKE</tt> and <tt>ILIKE</tt></h3>
 <div class="paragraph"><p>You can define search patterns using the <tt>LIKE</tt> operator, and meta
 characters. This helps to find matches in a table.</p></div>
 <div class="paragraph"><p>Using the <tt>LIKE</tt> operator you can search for patterns at the beginning
@@ -1097,6 +1097,20 @@ like this:</p></div>
   4 |        1 | Jackdaws
 (2 Zeilen)</tt></pre>
 </div></div>
+<div class="paragraph"><p>To find an exact pattern use the <tt>LIKE</tt> operator. To find patterns no
+matter which spelling the <tt>ILIKE</tt> operator can be helpful. <tt>ILIKE</tt> is a
+PostgreSQL extension, and does not belong to the SQL standard set.</p></div>
+<div class="paragraph"><p>In the following example all entries are fetched from the table that
+start with the substring <tt>BL</tt> followed by any other characters, no
+matter whether these characters are lowercase or uppercase.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications WHERE booktitle ILIKE 'BL%';
+ id | authorid |   booktitle
+----+----------+----------------
+  3 |        2 | Black And Blue
+(1 Zeile)</tt></pre>
+</div></div>
 </div>
 </div>
 </div>
@@ -1105,7 +1119,7 @@ like this:</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-21 14:13:46 CEST
+Last updated 2014-10-21 14:27:43 CEST
 </div>
 </div>
 </body>
