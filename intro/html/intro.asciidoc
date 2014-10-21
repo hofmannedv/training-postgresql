@@ -8,7 +8,7 @@ Frank Hofmann
 :Author Initials: FH
 :edition: 1
 :lang: en
-:date: October 20, 2014
+:date: October 21, 2014
 :numbered:
 
 = Preface =
@@ -85,6 +85,10 @@ publications=# \dt publications
  public | publications | Tabelle | frank
 (1 Zeile)
 ----
+
+== The basic structure of an SQL command ==
+
+ToDo
 
 == Selecting data ==
 
@@ -166,5 +170,7 @@ Scherbaum, and Jan-Erik Tesdal for their tips and advice on this document.
 
 - [[[PostgreSQL-Debian]]] Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy', http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
 
-- [[[Scherbaum]]] Andreas Scherbaum: PostgreSQL - Datenbankpraxis für Anwender,
-  Administratoren und Entwickler, Open Source Press, http://postgresql-buch.de/
+- [[[Scherbaum]]] Andreas Scherbaum: PostgreSQL -- Datenbankpraxis für Anwender,
+  Administratoren und Entwickler, Open Source Press, München, 2009, ISBN ISBN 978-3-937514-55-0, http://postgresql-buch.de/
+
+- [[[Boenigk]]] Cornelia Boenigk: PostgreSQL -- Grundlagen, Praxis, Anwendungsentwicklung mit PHP, dpunkt Verlag, Heidelberg, 2003, ISBN 3-89864-175-9
