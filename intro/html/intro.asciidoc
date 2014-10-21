@@ -59,10 +59,10 @@ The `psql` options result in:
 `-d`:: database named `publications` to connect to
 `-f`:: read data from the referenced file name `publications.data`
 
-== Display the existing tables ==
+== Display the existing tables in a database ==
 
-Use the command '\dt' for that. Without further parameter the command
-lists all the tables that are available.
+Use the command '\dt' for that. Without further parameters the command
+lists all the tables that are available in the current database:
 
 ----
 publications=# \dt
@@ -74,8 +74,9 @@ publications=# \dt
 (2 Zeilen)
 ----
 
-To display the table `publications`, only, extend the command '\dt' by
-the according name of the table:
+The output contains the scheme, the name of the tables, the entry type,
+and its owner. To display the table `publications`, only, extend the
+command '\dt' by the according name of the table:
 
 ----
 publications=# \dt publications 
@@ -171,6 +172,7 @@ Scherbaum, and Jan-Erik Tesdal for their tips and advice on this document.
 - [[[PostgreSQL-Debian]]] Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy', http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
 
 - [[[Scherbaum]]] Andreas Scherbaum: PostgreSQL -- Datenbankpraxis für Anwender,
-  Administratoren und Entwickler, Open Source Press, München, 2009, ISBN ISBN 978-3-937514-55-0, http://postgresql-buch.de/
+  Administratoren und Entwickler, Open Source Press, München, 2009, ISBN
+ISBN 978-3-937514-55-0, http://postgresql-buch.de/ , http://www.opensourcepress.de/de/produkte/PostgreSQL/426/978-3-937514-55-0
 
 - [[[Boenigk]]] Cornelia Boenigk: PostgreSQL -- Grundlagen, Praxis, Anwendungsentwicklung mit PHP, dpunkt Verlag, Heidelberg, 2003, ISBN 3-89864-175-9
