@@ -740,7 +740,7 @@ asciidoc.install(4);
 <h1>Learning PostgreSQL</h1>
 <span id="author">Frank Hofmann</span><br />
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">October 18, 2014</span>
+<span id="revdate">October 21, 2014</span>
 <div id="toc">
   <div id="toctitle">Table of Contents</div>
   <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
@@ -750,8 +750,10 @@ asciidoc.install(4);
 <h1 id="_preface">Preface</h1>
 <div class="paragraph"><p>An example database for the first steps using PostgreSQL.</p></div>
 <div class="paragraph"><p>The file <tt>publications.data</tt> consists of the example database
-<tt>publications</tt> with two tables named <tt>authors</tt>, and <tt>publications</tt>. This
-example shows how to select data, and specify the data output.</p></div>
+<tt>publications</tt> with two tables named <tt>authors</tt>, and <tt>publications</tt>. For
+installing PostgreSQL, and creating the database see the introduction of
+this tutorial. This part shows how to select data, and specify the data
+output.</p></div>
 <div class="sect1">
 <h2 id="_selecting_data">1. Selecting data</h2>
 <div class="sectionbody">
@@ -896,7 +898,7 @@ rows that match these conditions, only. The definition is like that:</p></div>
 FROM table
 WHERE condition;</tt></pre>
 </div></div>
-<div class="paragraph"><p>As a condition the following operators are allowed to be used:</p></div>
+<div class="paragraph"><p>In a condition you can use the following operators:</p></div>
 <div class="tableblock" id="tab.operators">
 <table rules="all"
 width="100%"
@@ -938,6 +940,10 @@ cellspacing="0" cellpadding="4">
 <tr>
 <td align="left" valign="top"><p class="table"><tt>IN</tt></p></td>
 <td align="left" valign="top"><p class="table">member in a set</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>BETWEEN</tt></p></td>
+<td align="left" valign="top"><p class="table">specify an interval</p></td>
 </tr>
 </tbody>
 </table>
@@ -997,7 +1003,7 @@ values.</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-20 22:10:57 CEST
+Last updated 2014-10-21 11:52:08 CEST
 </div>
 </div>
 </body>

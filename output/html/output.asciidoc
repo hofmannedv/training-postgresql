@@ -8,7 +8,7 @@ Frank Hofmann
 :Author Initials: FH
 :edition: 1
 :lang: en
-:date: October 18, 2014
+:date: October 21, 2014
 :numbered:
 
 = Preface =
@@ -16,8 +16,10 @@ Frank Hofmann
 An example database for the first steps using PostgreSQL.
 
 The file `publications.data` consists of the example database
-`publications` with two tables named `authors`, and `publications`. This
-example shows how to select data, and specify the data output.
+`publications` with two tables named `authors`, and `publications`. For
+installing PostgreSQL, and creating the database see the introduction of
+this tutorial. This part shows how to select data, and specify the data
+output.
 
 == Selecting data ==
 
@@ -164,7 +166,7 @@ FROM table
 WHERE condition;
 ----
 
-As a condition the following operators are allowed to be used:
+In a condition you can use the following operators:
 
 [frame="topbot",options="header",id="tab.operators"]
 |====
@@ -176,6 +178,7 @@ As a condition the following operators are allowed to be used:
 | `>`  | greater than
 | `<>` and `!=` | not
 | `IN` | member in a set
+| `BETWEEN` | specify an interval
 |====
 
 To display the entries in which the authorId is 1 (= all books by Ken
