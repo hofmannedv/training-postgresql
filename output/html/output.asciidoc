@@ -282,3 +282,29 @@ as well as at the end of strings, and for fragments, too. This helps you
 to find substrings no matter where they appear in your string. In case
 of a match the `LIKE` operator returns `TRUE`, and `FALSE` otherwise.
 Combining the two operators `NOT` and `LIKE` reverses the result.
+
+To specify a pattern the following characters are allowed to use:
+
+[frame="topbot",options="header",id="tab.pattern"]
+|====
+| Query  | Description
+| `LIKE '%'` | Return all the matches. `%` represents all characters.
+| `LIKE '%e'` | Return all the matches that end with character `e`.
+| `LIKE 'a%'` | Return all the matches that start with character `a`.
+| `LIKE '%web%'` | Return all the matches that contain the substring `web`.
+| `LIKE '%ws_%'` | Return all the matches that end with the substring `ws` followed by any other character.
+| `LIKE '-----'` | Return all the matches that are five characters in
+length.
+|====
+
+To find all books which have `ack` in its book title write your query
+like this:
+
+----
+publications=# SELECT * FROM publications WHERE booktitle LIKE '%ack%';
+ id | authorid |   booktitle    
+----+----------+----------------
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(2 Zeilen)
+----
