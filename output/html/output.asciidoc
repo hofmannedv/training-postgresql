@@ -324,3 +324,17 @@ publications=# SELECT * FROM publications WHERE booktitle ILIKE 'BL%';
   3 |        2 | Black And Blue
 (1 Zeile)
 ----
+
+Furthermore, PostgreSQL supports the following alternative ways of
+writing for the operators `LIKE`, and `ILIKE`.
+
+[frame="topbot",options="header",id="tab.pattern-alternatives"]
+|====
+| Pattern  | Alternative spelling
+| `~~` | `LIKE`
+| `!~~` | `NOT LIKE`
+| `~~*` | `ILIKE`
+| `!~~*` | `NOT ILIKE`
+|====
+
+

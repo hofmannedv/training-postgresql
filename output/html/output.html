@@ -1111,6 +1111,41 @@ matter whether these characters are lowercase or uppercase.</p></div>
   3 |        2 | Black And Blue
 (1 Zeile)</tt></pre>
 </div></div>
+<div class="paragraph"><p>Furthermore, PostgreSQL supports the following alternative ways of
+writing for the operators <tt>LIKE</tt>, and <tt>ILIKE</tt>.</p></div>
+<div class="tableblock" id="tab.pattern-alternatives">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Pattern  </th>
+<th align="left" valign="top"> Alternative spelling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>~~</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>LIKE</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>!~~</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>NOT LIKE</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>~~*</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>ILIKE</tt></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><tt>!~~*</tt></p></td>
+<td align="left" valign="top"><p class="table"><tt>NOT ILIKE</tt></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -1119,7 +1154,7 @@ matter whether these characters are lowercase or uppercase.</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-21 14:27:43 CEST
+Last updated 2014-10-21 14:32:40 CEST
 </div>
 </div>
 </body>
