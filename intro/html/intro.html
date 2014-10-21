@@ -868,13 +868,25 @@ query. This character indicates the end of the query, and PostgreSQL
 executes your query. As an alternative the characters <tt>\g</tt> are possible
 that can be translated as <tt>go</tt>.</p></div>
 <div class="paragraph"><p>Having executed your query PostgreSQL reports how many rows are affected
-by your query. The result is output below the result:</p></div>
+by your query. The result is output below the result. The next example
+displays the time value PostgreSQL works with, internally. The result
+consists of one single row:</p></div>
 <div class="listingblock">
 <div class="content">
 <pre><tt>publications=# SELECT CURRENT_TIME;
        timetz
 - ------------------
  11:26:08.913477+02
+(1 Zeile)</tt></pre>
+</div></div>
+<div class="paragraph"><p>You may also retrieve the PostgreSQL version you are working with. In
+this case, <tt>version()</tt> is an internal PostgreSQL function.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT version();
+                                        version
+- --------------------------------------------------------------------------------------
+ PostgreSQL 9.1.13 on i686-pc-linux-gnu, compiled by gcc (Debian 4.7.2-5) 4.7.2, 32-bit
 (1 Zeile)</tt></pre>
 </div></div>
 </div>
@@ -988,7 +1000,7 @@ ISBN 978-3-937514-55-0, <a href="http://postgresql-buch.de/">http://postgresql-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br />
-Last updated 2014-10-21 11:27:37 CEST
+Last updated 2014-10-21 11:33:19 CEST
 </div>
 </div>
 </body>
