@@ -1,0 +1,542 @@
+Learning PostgreSQL
+===================
+Frank Hofmann
+:subtitle:
+:doctype: book
+:copyright: Frank Hofmann
+:revnumber: 1.0
+:Author Initials: FH
+:edition: 1
+:lang: en
+:date: November 5, 2014
+:numbered:
+
+= Preface =
+
+An example database for the first steps using PostgreSQL.
+
+The file `publications.data` consists of the example database
+`publications` with two tables named `authors`, and `publications`. This
+example shows how to create a table, insert data, select data, removes
+data, and how to join two tables.
+
+[[session-intro]]
+= Session 1 =
+
+== How to install == 
+
+=== PostgreSQL on Debian 7 'Wheezy' ===
+
+This excellent tutorial explains how to do that:
+
+* Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy' <<PostgreSQL-Debian>>
+
+=== PostgreSQL on OS X ===
+
+There is the postgresql.app which simplifies getting started:
+
+* PostgreSQL.app: http://postgresapp.com/
+
+== Preparing the working environment ==
+
+=== Create the database ===
+
+As the database administrator use the command `createdb` to prepare the database we need:
+
+----
+$ createdb -O username publications
+----
+
+As the username choose your UNIX user name so that the database belongs to you.
+
+=== Use the example database content delivered here ===
+
+Import the prepared database content from the file `publications.data`.
+
+----
+$ psql -d publications -f publications.data publications
+----
+
+The `psql` options result in:
+
+`-d`:: database named `publications` to connect to
+`-f`:: read data from the referenced file name `publications.data`
+
+== Display the existing tables in a database ==
+
+Use the command '\dt' for that. Without further parameters the command
+lists all the tables that are available in the current database:
+
+----
+publications=# \dt
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | authors      | Tabelle | frank
+ public | publications | Tabelle | frank
+(2 Zeilen)
+----
+
+The output contains the scheme, the name of the tables, the entry type,
+and its owner. To display the table `publications`, only, extend the
+command '\dt' by the according name of the table:
+
+----
+publications=# \dt publications 
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer 
+--------+--------------+---------+------------
+ public | publications | Tabelle | frank
+(1 Zeile)
+----
+
+== The basic structure of an SQL command ==
+
+Using a commandline prompt, PostgreSQL waits for your instructions. An
+instruction is named ``query'' no matter which kind of action it
+triggers. In general, an SQL query has the following format:
+
+----
+statement;
+----
+
+A statement can be something like `SELECT field FROM table;` whereas
+field refers to a certain column, and table to the according name of the
+table to retrieve data from (see the <<select>> statement for more details). 
+
+It is more important to notice the semicolon at the end of the SQL
+query. This character indicates the end of the query, and PostgreSQL
+executes your query. As an alternative the characters `\g` are possible
+that can be translated as `go`.
+
+Having executed your query PostgreSQL reports how many rows are affected
+by your query. The result is output below the result. The next example
+displays the time value PostgreSQL works with, internally. The result
+consists of one single row:
+
+----
+publications=# SELECT CURRENT_TIME;
+       timetz       
+- ------------------
+ 11:26:08.913477+02
+(1 Zeile)
+----
+
+You may also retrieve the PostgreSQL version you are working with. In
+this case, `version()` is an internal PostgreSQL function.
+
+----
+publications=# SELECT version();
+                                        version                                         
+- --------------------------------------------------------------------------------------
+ PostgreSQL 9.1.13 on i686-pc-linux-gnu, compiled by gcc (Debian 4.7.2-5) 4.7.2, 32-bit
+(1 Zeile)
+----
+
+[[select]]
+== Selecting data ==
+
+To display the contents of the authors table use the `SELECT` command as
+follows:
+
+----
+publications=# SELECT * FROM authors; 
+ id |    name
+----+-------------
+  1 | Ken Follet
+  2 | Ian Rankin
+  3 | Stephen Fry
+(3 Zeilen)
+----
+
+To display the contents of the publications table and sort by
+publications title in descending order, the `ORDER BY` statement comes
+into play. The statement `DESC` sorts in descending order, and `ASC` in
+ascending order, respectively. `ASC` is the default sort order.
+
+----
+publications=# SELECT * FROM publications ORDER BY booktitle DESC;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  4 |        1 | Jackdaws
+  3 |        2 | Black And Blue
+(4 Zeilen)
+----
+
+== Deleting lines ==
+
+To delete the writer with `id = 3` from the table `authors`, use the
+`DELETE` command.
+
+----
+publications=# DELETE FROM authors WHERE id = 3;
+DELETE 1
+----
+
+== Insert data ==
+
+To insert a new writer into table `authors`, use the `INSERT` command.
+
+----
+publications=# INSERT INTO authors VALUES (3, 'Stephen Fry');
+INSERT 0 1
+----
+
+== Combining tables ==
+
+To join two tables to list both the author name, and the according book
+title in ascending order, the `JOIN` command will help. To identify the
+columns in the correct way, add the table name, too.
+
+----
+SELECT authors.name, booktitle FROM publications JOIN authors ON
+(publications.authorId = authors.id) ORDER BY authors.name,booktitle
+ASC;
+    name    |     booktitle
+------------+-------------------
+ Ian Rankin | Black And Blue
+ Ian Rankin | Set In Darkness
+ Ken Follet | Jackdaws
+ Ken Follet | World Without End
+(4 Zeilen)
+----
+
+[[session-output]]
+= Session 2 =
+
+== Selecting data ==
+
+To display the contents of the authors table use the `SELECT` command as
+shown below. The simple usage is as follows:
+
+----
+SELECT column [,column] FROM table;
+----
+
+As a column you may either specify a list of column names from the named
+table, or the `*` operator. 
+
+----
+publications=# SELECT booktitle FROM publications;
+     booktitle
+- -----------------
+ World Without End
+ Set In Darkness
+ Black And Blue
+ Jackdaws
+(4 Zeilen)
+----
+
+The `*` operator selects all the columns from the named table. At the
+end the output includes the statement how many lines have been fetched
+from the table. As you can see above these are four lines, and three
+lines in the output below.
+
+----
+publications=# SELECT * FROM authors; 
+ id |    name
+----+-------------
+  1 | Ken Follet
+  2 | Ian Rankin
+  3 | Stephen Fry
+(3 Zeilen)
+----
+
+The sort order is not predictable, because there are no rules about the
+sort order. Usually, the entries are shown as the DBMS fetches them from
+the database table, and as they had been added to the table before.
+
+== Sorting the output ==
+
+=== By a certain column ===
+
+PostgreSQL supports so-called SQL clauses. One of these is `ORDER BY`
+to sort the output by one or more columns. It is defined as follows:
+
+----
+SELECT colunmlist
+FROM table
+ORDER BY column name [,column name] [ASC|DESC];
+----
+
+To display the contents of the publications table and sort by
+publications title, the `ORDER BY` statement comes into play followed
+the name of the column `booktitle`.
+
+----
+publications=# SELECT * FROM publications ORDER BY booktitle;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+  2 |        2 | Set In Darkness
+  1 |        1 | World Without End
+(4 Zeilen)
+----
+
+=== By more than one column ===
+
+The `ORDER BY` clause allows you to specify more than one column.
+PostgreSQL sorts the items accordingly from left to right.
+
+The example below displays sorting by author (column `authorid`),
+firstly, and by book title (column `booktitle`), secondly.
+
+----
+publications=# SELECT * FROM publications ORDER BY authorid,booktitle;
+ id | authorid |     booktitle
+----+----------+-------------------
+  4 |        1 | Jackdaws
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  2 |        2 | Set In Darkness
+(4 Zeilen)
+----
+
+=== Ascending and descending sort order ===
+
+As already stated above the output sort order is not guaranteed.
+PostgreSQL offers two further clauses to specify this -- `ASC`, and
+`DESC`. The statement `ASC` sorts in ascending order, and `DESC` in
+descending order, respectively.
+
+The example below shows the output from table `publications` sorted by
+`booktitle` in descending order.
+
+----
+publications=# SELECT * FROM publications ORDER BY booktitle DESC;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  4 |        1 | Jackdaws
+  3 |        2 | Black And Blue
+(4 Zeilen)
+----
+
+== Filtering the output ==
+=== Suppress duplicates using `DISTINCT` ===
+
+Usually, the output contains all the rows that might be a bit too much
+in some situations. Now, the `DISTINCT` statement comes into play. The
+database server suppresses the output of duplicate entries. 
+
+----
+SELECT 
+DISTINCT columnlist
+FROM table;
+----
+
+The example below shows the list of authors with unique values.
+
+----
+publications=# SELECT DISTINCT authorid FROM publications;
+ authorid 
+- --------
+        1
+        2
+(2 Zeilen)
+----
+
+=== Use conditions and the `WHERE` statement ===
+
+The `WHERE` statement allows you to set conditions, and to filter the
+rows that match these conditions, only. The definition is like that:
+
+----
+SELECT colunmlist
+FROM table
+WHERE condition;
+----
+
+In a condition you can use the following operators:
+
+[frame="topbot",options="header",id="tab.operators"]
+|====
+| Operator  | Description
+| `<`  | less than
+| `<=` | less or equal than 
+| `=`  | equal
+| `>=` | greater or equal than
+| `>`  | greater than
+| `<>` and `!=` | not
+| `IN` | member in a set
+| `BETWEEN` | specify an interval
+|====
+
+To display the entries in which the authorId is 1 (= all books by Ken
+Follett as he owns authorId 1) use this:
+
+----
+publications=# SELECT * FROM publications WHERE authorId = 1;
+ id | authorid |     booktitle
+----+----------+-------------------
+  1 |        1 | World Without End
+  4 |        1 | Jackdaws
+(2 Zeilen)
+----
+
+It is also possible to combine conditions using the `OR` operator. The
+next example shows the output that contains all entries which have
+either id as 1, or 4.
+
+----
+publications=# SELECT * FROM publications WHERE id = 1 OR id = 4;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  4 |        1 | Jackdaws
+(2 Zeilen)
+----
+
+To display the entries in which the id is either 1, 3, or 4, you may use
+the `IN` operator as follows:
+
+----
+publications=# SELECT * FROM publications WHERE id IN (1, 3, 4);
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)
+----
+
+PostgreSQL also knows the keyword `BETWEEN` to specify a range of
+values.
+
+----
+publications=# SELECT * FROM publications WHERE id BETWEEN 2 AND 4;
+ id | authorid |    booktitle    
+----+----------+-----------------
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)
+----
+
+=== Limit the output ===
+
+In certain situations you may like to limit the lines of output, for
+example on a website displaying the search result. At this point the
+`LIMIT` keyword comes into play. The definition is like that:
+
+----
+SELECT colunmlist
+FROM table
+LIMIT number
+OFFSET index;
+----
+
+The value of `number` sets the maximum number of output lines. The next
+example displays the first three entries, only:
+
+----
+publications=# SELECT * FROM publications LIMIT 3;
+ id | authorid |     booktitle     
+----+----------+-------------------
+  1 |        1 | World Without End
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+(3 Zeilen)
+----
+
+To start at a certain output entry the start position can be specified
+using the `OFFSET` value. Keep in mind that PostgreSQL starts to count
+at offset 0. To start from the second entry you can write this query:
+
+----
+publications=# SELECT * FROM publications LIMIT 3 OFFSET 1;
+ id | authorid |    booktitle    
+----+----------+-----------------
+  2 |        2 | Set In Darkness
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(3 Zeilen)
+----
+
+=== Search patterns using `LIKE` and `ILIKE` ===
+
+You can define search patterns using the `LIKE` operator, and meta
+characters. This helps to find matches in a table.
+
+Using the `LIKE` operator you can search for patterns at the beginning
+as well as at the end of strings, and for fragments, too. This helps you
+to find substrings no matter where they appear in your string. In case
+of a match the `LIKE` operator returns `TRUE`, and `FALSE` otherwise.
+Combining the two operators `NOT` and `LIKE` reverses the result.
+
+To specify a pattern the following characters are allowed to use:
+
+[frame="topbot",options="header",id="tab.pattern"]
+|====
+| Query  | Description
+| `LIKE '%'` | Return all the matches. `%` represents all characters.
+| `LIKE '%e'` | Return all the matches that end with character `e`.
+| `LIKE 'a%'` | Return all the matches that start with character `a`.
+| `LIKE '%web%'` | Return all the matches that contain the substring `web`.
+| `LIKE '%ws_%'` | Return all the matches that end with the substring `ws` followed by any other character.
+| `LIKE '-----'` | Return all the matches that are five characters in
+length.
+|====
+
+To find all books which have `ack` in its book title write your query
+like this:
+
+----
+publications=# SELECT * FROM publications WHERE booktitle LIKE '%ack%';
+ id | authorid |   booktitle    
+----+----------+----------------
+  3 |        2 | Black And Blue
+  4 |        1 | Jackdaws
+(2 Zeilen)
+----
+
+To find an exact pattern use the `LIKE` operator. To find patterns no
+matter which spelling the `ILIKE` operator can be helpful. `ILIKE` is a
+PostgreSQL extension, and does not belong to the SQL standard set.
+
+In the following example all entries are fetched from the table that
+start with the substring `BL` followed by any other characters, no
+matter whether these characters are lowercase or uppercase.
+
+----
+publications=# SELECT * FROM publications WHERE booktitle ILIKE 'BL%';
+ id | authorid |   booktitle    
+----+----------+----------------
+  3 |        2 | Black And Blue
+(1 Zeile)
+----
+
+Furthermore, PostgreSQL supports the following alternative ways of
+writing for the operators `LIKE`, and `ILIKE`.
+
+[frame="topbot",options="header",id="tab.pattern-alternatives"]
+|====
+| Pattern  | Alternative spelling
+| `~~` | `LIKE`
+| `!~~` | `NOT LIKE`
+| `~~*` | `ILIKE`
+| `!~~*` | `NOT ILIKE`
+|====
+
+= Acknowledgements =
+
+The author sincerely thanks Wolfram Eifler, Stefan Schumacher, Andreas
+Scherbaum, and Jan-Erik Tesdal for their tips and advice on this document.
+
+= Further information =
+
+- Official PostgreSQL documentation, http://www.postgresql.org/docs/
+
+- [[[PostgreSQL-Debian]]] Install PostgreSQL and phpPgAdmin on Debian 7 'Wheezy', http://www.unixmen.com/install-postgresql-and-phppgadmin-on-debian-7-wheezy/
+
+- [[[Scherbaum]]] Andreas Scherbaum: PostgreSQL -- Datenbankpraxis für Anwender,
+  Administratoren und Entwickler, Open Source Press, München, 2009, ISBN
+ISBN 978-3-937514-55-0, http://postgresql-buch.de/ , http://www.opensourcepress.de/de/produkte/PostgreSQL/426/978-3-937514-55-0
+
+- [[[Boenigk]]] Cornelia Boenigk: PostgreSQL -- Grundlagen, Praxis, Anwendungsentwicklung mit PHP, dpunkt Verlag, Heidelberg, 2003, ISBN 3-89864-175-9An example database for the first steps using PostgreSQL.
+
+
