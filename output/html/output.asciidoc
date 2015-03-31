@@ -4,11 +4,11 @@ Frank Hofmann
 :subtitle:
 :doctype: book
 :copyright: Frank Hofmann
-:revnumber: 1.0
+:revnumber: 1.1
 :Author Initials: FH
 :edition: 1
 :lang: en
-:date: October 21, 2014
+:date: March 31, 2015
 :numbered:
 
 = Preface =
@@ -270,6 +270,30 @@ publications=# SELECT * FROM publications LIMIT 3 OFFSET 1;
   3 |        2 | Black And Blue
   4 |        1 | Jackdaws
 (3 Zeilen)
+----
+
+To output the first entry, only, you combine the `ASC` statement, and
+the `LIMIT` operator. The rows are sorted in ascending order, and the
+first entry is taken from the list.
+
+----
+publications=# SELECT * FROM publications ASC LIMIT 1;
+ id | authorid |    booktitle    
+----+----------+-----------------
+  1 |        1 | World Without End
+(1 Zeile)
+----
+
+To retrieve the last entry, only, you combine the `DESC` statement, and
+the `LIMIT` operator. The rows are sorted in descending order, and the
+first entry is taken from the list.
+
+----
+publications=# SELECT * FROM publications DESC LIMIT 1;
+ id | authorid |    booktitle    
+----+----------+-----------------
+  4 |        1 | Jackdaws
+(1 Zeile)
 ----
 
 === Search patterns using `LIKE` and `ILIKE` ===

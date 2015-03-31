@@ -731,7 +731,7 @@ install: function(toclevels) {
 }
 
 }
-asciidoc.install(4);
+asciidoc.install();
 /*]]>*/
 </script>
 </head>
@@ -739,12 +739,8 @@ asciidoc.install(4);
 <div id="header">
 <h1>Learning PostgreSQL</h1>
 <span id="author">Frank Hofmann</span><br />
-<span id="revnumber">version 1.0,</span>
-<span id="revdate">October 21, 2014</span>
-<div id="toc">
-  <div id="toctitle">Table of Contents</div>
-  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
-</div>
+<span id="revnumber">version 1.1,</span>
+<span id="revdate">March 31, 2015</span>
 </div>
 <div id="content">
 <h1 id="_preface">Preface</h1>
@@ -1033,6 +1029,28 @@ at offset 0. To start from the second entry you can write this query:</p></div>
   4 |        1 | Jackdaws
 (3 Zeilen)</tt></pre>
 </div></div>
+<div class="paragraph"><p>To output the first entry, only, you combine the <tt>ASC</tt> statement, and
+the <tt>LIMIT</tt> operator. The rows are sorted in ascending order, and the
+first entry is taken from the list.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications ASC LIMIT 1;
+ id | authorid |    booktitle
+----+----------+-----------------
+  1 |        1 | World Without End
+(1 Zeile)</tt></pre>
+</div></div>
+<div class="paragraph"><p>To retrieve the last entry, only, you combine the <tt>DESC</tt> statement, and
+the <tt>LIMIT</tt> operator. The rows are sorted in descending order, and the
+first entry is taken from the list.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>publications=# SELECT * FROM publications DESC LIMIT 1;
+ id | authorid |    booktitle
+----+----------+-----------------
+  4 |        1 | Jackdaws
+(1 Zeile)</tt></pre>
+</div></div>
 </div>
 <div class="sect2">
 <h3 id="_search_patterns_using_tt_like_tt_and_tt_ilike_tt">3.4. Search patterns using <tt>LIKE</tt> and <tt>ILIKE</tt></h3>
@@ -1153,8 +1171,8 @@ cellspacing="0" cellpadding="4">
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0<br />
-Last updated 2014-10-21 14:32:40 CEST
+Version 1.1<br />
+Last updated 2015-03-31 12:04:06 CEST
 </div>
 </div>
 </body>
