@@ -1,0 +1,641 @@
+Datenbanken und Anwendungen (3 Tage)
+====================================
+:author:    Frank Hofmann, Gerold Rupprecht
+:backend:   slidy
+:max-width: 94%
+:icons:
+
+== Inhalt ==
+
+* Tag 1
+** Kursüberblick
+*** Willkommen im Kurs, Vorstellungsrunde
+*** Kursablauf
+*** Vorkenntnisse, Ziele und Erwartungen
+*** Software im Kurs
+
+** Einführung zu Datenbanken
+*** Grundbegriffe
+*** DBMS - allgemeiner Aufbau
+*** Benutzerrollen
+*** Arten und Typen von DBMS
+*** Vertreter und Nicht-Vertreter
+
+*** Spezifische Begriffe
+*** Benutzerschnittstellen
+*** Auswahlkriterien für DBMS
+*** Anfragesprachen und Dialekte
+*** Nutzungsmodelle/Kostenfaktoren für DBMS
+
+* Tag 2
+** Verbindungsaufbau von/zum DBMS
+** Ablauf und Flaschenhälse
+** Was macht eine gute DB-Anfrage aus?
+** Test-driven Development
+** Benutzerschnittstellen zur Administration
+
+** Welche Daten gehören in eine Tabelle und welche nicht?
+** Refactoring
+** Gute und schlechte Beispiele aus der Praxis
+** Q & A
+
+* Tag 3
+** DBMS-Ökosystem -- Struktur und Einbindung in andere IT-Komponenten
+** Replikation und Clustering
+** Backup und Restore
+** Storage Options (RAID)
+** Import und Export von Tabellen und Datenbanken
+** Inhalte migrieren
+
+** DBMS gegen unerlaubte Zugriffe absichern
+** Dokumentation für Admin und Benutzer
+** Kursabschluss und Feedbackrunde
+
+== Einführung ==
+
+=== Was ist eine Datenbank ===
+
+* Behälter zur Speicherung von Daten
+* Behälter wird abgebildet als 
+** gesamter Inhalt eines Speichermediums (Oracle DB)
+** Datei im Dateisystem: `/var/lib/postgresql/version/main` (PostgreSQL)
+
+image::postgresql-pfad.png[id="fig.postgresql-pfad", width="30%"]
+
+=== DB vs DBS vs DBMS ===
+
+DBMS:: Abkürzung für Datenbank-Management-System ('database management system')
+
+DBS:: Abkürzung für Datenbanksystem ('database system')
+
+DB:: Abkürzung für Datenbank ('database')
+
+Tabelle:: Datenstruktur innerhalb einer Datenbank
+
+Anfrage (Query):: Abfrage nach Daten aus einer oder mehrerer Tabellen
+
+Resultat:: Antwort auf die Anfrage
+
+ETL:: Abkürzung für Extraction, Transform und Load
+
+Transaktionsicherheit:: Garantie, dass eine Datenabfrage vollständig
+abgeschlossen ist
+
+Views:: spezialisierte Sicht auf Tabellen
+
+Trigger:: Reaktion auf ein Ereignis (Einfügen, Ändern oder Löschen), Ausführung einer Funktion
+
+Fremdschlüssel:: Schlüssel einer fremden Tabelle
+
+JOIN:: Verbinden von Ergebnissen von Anfragen
+
+Stored Procedures:: gespeicherte Anfragen (Queries)
+
+Schematischer Aufbau:
+
+image::db-vs-dbms.png[id="fig.db-vs-sbms", width="30%"]
+
+=== DBS-Formen ===
+
+lokal:: alles auf einem einzigen Computer bzw. Speichermedium
+
+verteilt ('distributed'):: über mehrere Computer und Speichermedien verteilt
+
+Client/Server:: Server stellt alle Daten bereit, bspw. verteilt über das
+Netzwerk, Client greift über eine Schnittstelle darauf zu, bspw. den
+Netzwerkport
+
+== Ziel einer Datenbank ==
+
+* Daten strukturiert speichern und wiederfinden
+* Informationen erhalten
+* Daten aggregieren
+* Daten auswerten (in begrenztem Maße)
+
+.Interne Funktionen eines DBS (Auswahl)
+[frame="topbot",options="header",cols="4,2",id="tab.datenbankfunktionen"]
+|====
+| Kategorie | Funktion 
+| mathematische Funktionen | `sum()`, `avg()`, `count()`
+| statistische Funktionen | `min()`, `max()`, `avg()`
+| trigonometische Funktionen | `sin()`, `tan()`
+|====
+
+----
+Ziel: Ziel und Aufgaben eines DBMS
+----
+
+== Formate und Varianten ==
+
+=== Komma-separierte Werte (CSV) ===
+
+* Speicherung als Tabelle mit einzelnen Spalten
+* Trennzeichen als Spaltentrenner
+** Leerzeichen
+** Tabulator
+** Komma
+** Semikolon
+
+.adressen.txt
+----
+Name;Strasse;Ort;Postleitzahl;Telefon
+Rainer Zufall;Rathausplatz 15;Potsdam;14467;(0331) 123456
+Holger Glück;Am Nordtor 5;Nauen;14641;
+----
+
+=== Text und Tabellen (ASCII oder Binär) ===
+
+* speichert das DBMS
+* Format legt das DBMS fest
+
+----
+==================================================================
+|Name         |Strasse        |Ort    |Postleitzahl|Telefon      |
+==================================================================
+|Rainer Zufall|Rathausplatz 15|Potsdam|14467       |(0331) 123456|
+|Holger Glück |Am Nordtor 5   |Nauen  |14641       |             |
+==================================================================
+----
+
+=== Extended Markup Language (XML) ===
+
+* Speicherung als Knoten und Knoteninhalte
+* Knoten via `<knotenname>Inhalt</knotenname>`
+
+.adressen.xml
+----
+<adressliste>
+	<adresse>
+		<name>Rainer Zufall</name>
+		<strasse>Rathausplatz 15</strasse>
+		<ort>Potsdam</ort>
+		<postleitzahl>14467</postleitzahl>
+		<telefon>(0331) 123456</telefon>
+	</adresse>
+	<adresse>
+		<name>Holger Glück</name>
+		<strasse>Am Nordtor 5</strasse>
+		<ort>Nauen</ort>
+		<postleitzahl>14641</postleitzahl>
+		<telefon></telefon>
+	</adresse>
+</adressliste>
+----
+
+=== BLOB ===
+
+* Abkürzung für 'binary large objects'
+* Speicherung als Binärinhalt
+
+=== JSON ===
+
+* Abkürzung für 'JavaScript Object Notation'
+* serialisierte Datenmenge
+
+.adressen.json
+----
+{
+	"name": "Rainer Zufall",
+	"strasse": "Rathausplatz 15",
+	"ort": "Potsdam",
+	"postleitzahl": "14467",
+	"telefon": "(0331) 123456"
+}
+----
+
+== Zugangswege ==
+
+* Programm via Library oder ODBC/DBI-Treiber zum DBS
+** ODBC: Open Database Connectivity
+** JDBC: Java Database Connectivity
+** DBI: Database Interface
+
+image::db-zugangswege.png[id="fig.db-zugangswege", width="90%"]
+
+* Datenbank-Konsole (Terminal)
+
+.Zugriff auf eine lokale MySQL-Datenbank über die Datenbank-Konsole (Terminal)
+----
+$ mysql -u username -p
+Enter password:
+mysql>
+...
+use databasename;
+...
+$
+----
+
+.Zugriff auf eine lokale PostgreSQL-Datenbank über die Datenbank-Konsole (Terminal)
+----
+$ psql
+psql (9.4)
+Type "help" for help.
+postgres=#
+...
+$
+----
+
+== Auswahl einer Datenbank (Kriterien) ==
+
+* Features: 
+** Triggers
+** Fremdschlüssel
+** Views
+** Stored Procedures
+** Subqueries
+** JOINs
+** Transactions (ACID-Modell)
+
+* Datenmenge im konkreten Einsatzzweck
+* Budget für Lizenzen und Lizenzmodell
+* Wartungsmodell
+* Anzahl Benutzer, Datenbanken und Tabellen
+* Datentyp: Text vs. Binär (Bilder)
+* Zugriffsform/-häufigkeit
+* IT-Struktur rundherum (Betriebssystem und Architektur, Anwendungen)
+* Schnittstellen zur Bedienung
+* Datenbanktyp -- aktiv oder passiv
+
+.Datenbanktypen
+[frame="topbot",options="header",id="tab.datenbanktypen"]
+|====
+| Typ | Kriterien | Beispiel | Anwendungsbereich (Auswahl)
+
+| aktiv | verfügt über Views, Triggers, Stored Procedures und Event
+Handler, steuert sich selbst | PostgreSQL | situationsbasierte Benachrichtigung, Statistik
+
+| passiv | wird von einem äußeren Programm gesteuert | RSQL | Datenmüllhalde
+|====
+
+----
+Ziel: Kriterien zur Auswahl eines geeigneten DBMS und seiner Struktur
+----
+
+== Speicherformen ==
+
+* nach außen
+** raw-Daten auf Speichermedium (bspw. Oracle DB)
+** Datei (bspw. MySQL, SQLite)
+
+* nach innen
+** zeilenbasiert (CSV)
+** Tabellen  (bspw. MySQL, PostgreSQL)
+** Graph (bspw. neo4j und GraphQL)
+** als Objekt (bspw. DB40, Zope Object Database)
+
+* Unterschiede
+** ein Datensatz pro Zeile: `Name;Straße;Ort;PLZ`
+** ein Datensatz aus mehreren Entitäten (XML): `<name></name> ... <plz></plz>`
+** ein Datensatz aus mindestens einem Knoten (Graph): `[ID][Inhalt][*->][*->]`
+
+* Kriterien
+** feste vs. variable Spalten
+** feste vs. variable Größe pro Datensatz
+
+----
+Ziel 1: wie speichert und verwaltet ein DBMS seine Inhalte
+Ziel 2: Vor- und Nachteile verschiedener Formate
+----
+
+== DBMS (Auswahl) ==
+
+* OpenSource
+** MySQL (https://www.mysql.com/de/)
+** PostgreSQL (https://www.postgresql.org/)
+** MariaDB (https://mariadb.org/)
+** MongoDB (https://www.mongodb.com/de)
+** SQLite (https://www.sqlite.org/)
+** rSQL (http://www.rsql.ch/)
+** Firebird (https://www.firebirdsql.org/)
+** neo4j (http://neo4j.com/)
+** GraphQL (https://graphql.org/)
+* Kommerziell
+** MS SQL Server (https://www.microsoft.com/de-de/sql-server/sql-server-2017)
+** Oracle MySQL (https://www.mysql.com/)
+** DB2 (http://www.ibm.com/analytics/us/en/technology/db2)
+** SAP Adaptive Server Enterprise (vorher Sybase) (https://www.sap.com/cmp/syb/crm-xu15-int-asexprdm/index.html?kNtBzmUK9zU)
+
+----
+Ziel: Namen und Typen von DBMS zuordnen
+----
+
+== Zugriff (allgemein) ==
+
+=== Anfragesprache === 
+
+SQL:: Structured Query Language
+
+----
+SELECT Name,Telefonnummer FROM Adressen;
+----
+
+XSLT:: eXtensible Stylesheet Language
+
+Beispiel: https://www.w3schools.com/xml/tryxslt.asp?xmlfile=cdcatalog&xsltfile=cdcatalog_ex3
+
+=== Tools auf der Kommandozeile (Auswahl) ===
+
+* CSV: Standard-UNIX-Tools, bspw. `cut`, `tr`, `awk`
+
+.Erste und vierte Spalte ausgeben
+----
+$ echo "Holger Glück;Am Nordtor 5;Nauen;14641;" | awk -F ";" '{ print $1, $4 }'
+Holger Glück 14641
+$
+----
+
+* XML: `xsltproc`, `xmlstarlet`
+* JSON: `jq`
+
+----
+Ziel: wie greife ich auf Inhalte einer DB zu
+----
+
+== Ablauf eines Zugriffs auf eine Datenbank ==
+
+* zur Datenbank verbinden
+* Auftrag (Anfrage formulieren)
+* Auftrag absenden
+* Ergebnis holen
+* Verbindung beenden
+* Ergebnis auswerten
+* Ergebnis darstellen
+* Drumherum: Anwendungslogik
+
+----
+Ziel: wie funktioniert ein DBMS
+----
+
+== Datenbankaufträge ==
+
+=== Aufbau ===
+
+* Folge von Kommandos in einer Anfragesprache
+** Kommandos des DBS
+
+.Alle Datenbanken im DBS anzeigen (MySQL)
+----
+mysql> show databases;
++-----------------------+
+| Database              |
++-----------------------+
+| information_schema    |
+| mysql                 |
+| performance_schema    |
+| phpmyadmin            |
+| solar                 |
++-----------------------+
+5 rows in set (0.00 sec)
+----
+
+.Alle Tabellen der Datenbank `publications` anzeigen (PostgreSQL)
+----
+publications=# \dt
+             Liste der Relationen
+ Schema |     Name     |   Typ   | Eigentümer
+--------+--------------+---------+------------
+ public | authors      | Tabelle | frank
+ public | publications | Tabelle | frank
+(2 Zeilen)
+publications=#
+----
+
+** Structured Query Language (SQL)
+
+----
+statement;
+----
+
+=== Auswahl von Kommandos ===
+
+* Datenbank anlegen (`CREATE DATABASE`)
+
+----
+CREATE DATABASE buecherdatenbank;
+----
+
+* Tabelle anlegen (`CREATE TABLE`)
+
+----
+CREATE TABLE authors (
+    id INTEGER,
+    name VARCHAR(30)
+);
+----
+
+* Daten einfügen (`INSERT`)
+
+----
+INSERT INTO authors VALUES (3, 'Stephen Fry');
+----
+
+* Daten ändern (`UPDATE`)
+
+----
+UPDATE authors SET name = 'Stephen Fry' WHERE id = 3;
+----
+
+* Daten löschen (`DELETE`)
+
+----
+DELETE FROM authors WHERE id = 3;
+----
+
+* Daten auswählen (`SELECT`)
+
+----
+SELECT * FROM authors;
+----
+
+----
+Ziel: wie spreche ich ein DBMS an
+----
+
+== Was macht eine gute Anfrage aus? ==
+
+* Lastverteilung zwischen DBMS und Anwendung
+* Tabellenstruktur und Spaltenanordung
+* Benutzung von internen Funktionen der Datenbank
+* Gute und schlechte Beispiele für Anfragen aus der Praxis
+
+== Anwendung im Kurs ==
+
+=== Tabellenstrukturen ===
+
+* Aufbau eines Drachenmeldeamts -- welcher Drache wohnt auf welcher Burg
+(inklusive Erst- und Zweitburg)
+
+Burgenliste:: burgid, burgenname
++
+----
+// Tabelle für die Burgen anlegen
+CREATE burgenliste
+    burgid SERIAL PRIMARY KEY,
+    burgenname VARCHAR (30)
+;
+
+// Burgen einpflegen
+INSERT INTO burgenliste (burgenname) VALUES ('Rabenstein');
+INSERT INTO burgenliste (burgenname) VALUES ('Eltz');
+INSERT INTO burgenliste (burgenname) VALUES ('Doune Castle');
+INSERT INTO burgenliste (burgenname) VALUES ('Moritzburg');
+----
+
+Drachenmeldeamt:: drachenname, burgid
++
+----
+// Tabelle mit zwei Spalten anlegen
+CREATE TABLE drachenmeldeamt
+    drachenname VARCHAR(20),
+    burgid SERIAL
+;
+
+// Drachen einpflegen
+// Poldi auf Rabenstein
+INSERT INTO drachenmeldeamt VALUES ('Poldi', 1);
+// Grisu auf Moritzburg
+INSERT INTO drachenmeldeamt VALUES ('Grisu', 4);
+// Fauchi auf Eltz und Doune Castle
+INSERT INTO drachenmeldeamt VALUES ('Fauchi', 2);
+INSERT INTO drachenmeldeamt VALUES ('Fauchi', 3);
+----
+
+=== Beide Tabellen miteinander verbinden ===
+
+* Benutzung eines INNER JOINS
+
+----
+SELECT drachenmeldeamt.drachenname,burgenliste.burgenname
+FROM drachenmeldeamt
+INNER JOIN burgenliste ON burgenliste.burgid=drachenmeldeamt.burgid;
+----
+
+* Ausgabe
+
+----
+ drachenname | burgenname
+-------------+------------
+ Poldi       | Rabenstein
+ Fauchi      | Eltz
+ Fauchi      | Doune Castle
+ Grisu       | Moritzburg
+(4 Zeilen)
+----
+
+----
+Ziel: Datenstruktur zusammenstellen, verstehen und verbinden
+----
+
+== Werkzeuge im Projekt ==
+
+* Webserver (Apache, Nginx)
+* Datenbank (MySQL, PostgreSQL)
+* Webbasierter Zugriff mit PHPMyAdmin
+* Implementierung in einer Programmiersprache (PHP, Python)
+
+----
+Ziel: was brauchen wir dafür
+----
+
+== Ablauf ==
+
+=== Mit der Datenbank vertraut werden ===
+
+* Kommandozeile/Terminal-Interface
+* Tabelle anlegen und löschen
+* Tabelle auflisten
+* Daten einfügen
+* Daten auswählen
+* Daten löschen
+* Daten ändern
+
+----
+Ziel: Datenbank mit leerer Tabelle und fertiger Struktur
+----
+
+=== Webserver einrichten und testen ===
+
+* Installation Apache Webserver
+* Test auf Erreichbarkeit des Webservers
+
+----
+Ziel: Einrichtung und Prüfung eines Webservers verstehen
+----
+
+=== PHP einrichten und damit vertraut werden ===
+
+* PHP ergänzen ('mod_php' installieren und aktivieren)
+* PHP vs HTML
+
+----
+Ziel: erste kleine Anwendung schreiben: php_info()
+----
+
+=== HTML ===
+
+* Links und Verweise
+* Varianten und der Umgang mit Eingabefeldern
+* Parameter übergeben zwischen Skripts
+* Validierung der Parameter
+
+----
+Ziel: Menüauswahl realisieren
+----
+
+=== PHP ===
+
+* externe Dateien einbeziehen
+* HTML-Modul
+* Datenbank-Modul
+
+----
+Ziel: Modularisierung des Projekts/der Anwendung (Nutzen fertiger Module)
+----
+
+* Anwendungskonzept umsetzen
+** Tabelleninhalt anzeigen und verstehen
+** Eintrag ergänzen, ändern, löschen
+** Eintrag suchen (filtern)
+
+=== Richtig suchen und filtern ===
+
+* Suche mit Textvergleichen
+* Reguläre Ausdrücke nutzen
+
+=== Sortieren nach Tabellenspalte ===
+
+* `ORDER BY`
+
+=== Schick machen mit CSS ===
+
+* Einstieg in CSS
+
+== Anhang ==
+
+=== DBS-Kommandos ===
+
+Jedes DBS akzeptiert eine Reihe von Kommandos. Nachfolgend sehen Sie
+eine Auswahl zu MySQL und PostgreSQL.
+
+.DBS-Kommandos (Auswahl)
+[frame="topbot",options="header",cols="3,3,2",id="tab.dbs-kommandos"]
+|====
+| Aktion | MySQL | PostgreSQL
+| Hilfe zu Kommandos anzeigen | `help;` (kurz: `\?;`) | `\help;` (kurz: `\?;`) 
+| Datenbanken anzeigen | `show databases;` | `\list;` (kurz: `\l;`)
+| Tabellen anzeigen | `show tables from` 'database name'; | `\dt;`
+| DBS verlassen | `exit` und `quit` (kurz: `\q`) | 
+|====
+
+== Links ==
+
+* Radhika Kumaran: Active Databases, https://de.scribd.com/presentation/24508239/Active-Databases
+* Übersicht zu DBMS, https://db-engines.com/de/
+
+== Danksagung ==
+
+Danke für fachliche Kritik und Anmerkungen zur Korrektur an:
+
+* Gerold Rupprecht, Genf
+* Mandy Neumeyer, Kapstadt
+

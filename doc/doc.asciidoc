@@ -39,6 +39,17 @@ There is the postgresql.app which simplifies getting started:
 
 == Preparing the working environment ==
 
+=== Create the user ===
+
+As the database administrator use the command `createuser` to initiatialize an user 
+account for a regular UNIX user:
+
+----
+$ createuser --createdb frank
+----
+
+The option `--createdb` allows the user to create a database.w
+
 === Create the database ===
 
 As the database administrator use the command `createdb` to prepare the database we need:
