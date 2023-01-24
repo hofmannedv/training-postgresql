@@ -1,1 +1,2 @@
 - add Python-to-PostgreSQL interface (library)
+- add PostgreSQL hooks for inline scripts
